@@ -68,9 +68,11 @@ p2b2c = (Nevents-S)/(2*Nevents)
 K = 3
 J = 2
 
+
 classMapScores = pyro.ops.indexing.Vindex(torch.tensor([[0,0,0,0],[1,1,1,1],[0,0,1,1],[0,1,0,1],[0,1,1,0],[1,0,0,1],[1,0,1,0],[1,1,0,0]]))
 weightsForPermScores = pyro.ops.indexing.Vindex(torch.tensor([ [1]+7*[0] ,  [0,0]+6*[1./6] , [0]+[1]+6*[0]]))
-priorParamsBetas = pyro.ops.indexing.Vindex(torch.tensor(tagParams).float())
+
+priorParamsBetas = pyro.ops.indexing.Vindex(torch.tensor(np.array([[5.2,7.0],[2.7,1.3]])).float())
 
 classMapMass = pyro.ops.indexing.Vindex(torch.tensor([[False,False], [False, False], [True,True]]))
 
@@ -207,11 +209,13 @@ for n in range(10):
         loss = svi.step(data_train)
         losses.append(loss)
         if not i%1000:
-            print(loss)
+            print(f"{time.strftime('%H:%M:%S', time.localtime())}: Loss = {loss}")
 
     print(loss)
 
     map_estimates = global_guide(data_train)
+
+    print(map_estimates)
 
     run_data.update(map_estimates)
 
