@@ -18,6 +18,8 @@ from scipy.stats import beta, expon, norm
 import pickle
 import pandas as pd
 
+import time
+
 
 true_cJetParams = [4.8,7.4]
 true_bJetParams = [2.9,1.2]
@@ -119,7 +121,7 @@ def init_loc_fn(site):
     raise ValueError(site["name"])
 
 
-for n in range(25):
+for n in range(10):
     labels = []  # 0: 4c,exp ; 1: 2b2c,exp ; 2: 4b,gauss
     data = []
 
@@ -186,7 +188,16 @@ for n in range(25):
         return svi.evaluate_loss(data_train)
     
     print(f"##### RUN {n} #####")
-    loss, seed = min((initialize(seed), seed) for seed in range(100))
+    print("Testing 100 initial seeds for 500 steps")
+
+    tests = []
+    for seed in range(100):
+        if not seed%10:
+            print(f"{time.strftime('%H:%M:%S', time.localtime())}: Tested {seed} seeds")
+        tests.append((initialize(seed), seed))
+        
+
+    loss, seed = min(tests)
     loss = initialize(seed)
 
     print('seed = {}, initial_loss = {}'.format(seed, loss))
