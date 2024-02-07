@@ -57,7 +57,7 @@ bkgDist = TruncatedExponential(lb=lb, ub=ub, rate=lambdab)
 
 
 Nevents = 20000
-S = 200
+S = 100
 
 p4b = S/Nevents   # S/N
 p2b2c = (Nevents-S)/(2*Nevents)
@@ -121,7 +121,7 @@ def init_loc_fn(site):
     raise ValueError(site["name"])
 
 
-for n in range(2,25):
+for n in range(25):
     labels = []  # 0: 4c,exp ; 1: 2b2c,exp ; 2: 4b,gauss
     data = []
 
@@ -200,6 +200,7 @@ for n in range(2,25):
     loss, seed = min(tests)
     loss = initialize(seed)
 
+    print("Best seed:")
     print('seed = {}, initial_loss = {}'.format(seed, loss))
 
     losses = []
@@ -207,13 +208,16 @@ for n in range(2,25):
         loss = svi.step(data_train)
         losses.append(loss)
         if not i%1000:
-            print(f"{time.strftime('%H:%M:%S', time.localtime())}: Loss = {loss}")
+            print(f"{time.strftime('%H:%M:%S', time.localtime())}: After {i} steps, loss = {loss}")
 
     print(loss)
 
+    print("Results:")
     map_estimates = global_guide(data_train)
 
     print(map_estimates)
+    print("Data and results saved to data/")
+    print("\n")
 
     run_data.update(map_estimates)
 

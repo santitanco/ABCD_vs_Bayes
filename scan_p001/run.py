@@ -207,13 +207,16 @@ for n in range(2,25):
         loss = svi.step(data_train)
         losses.append(loss)
         if not i%1000:
-            print(f"{time.strftime('%H:%M:%S', time.localtime())}: Loss = {loss}")
+            print(f"{time.strftime('%H:%M:%S', time.localtime())}: After {i} steps, loss = {loss}")
 
     print(loss)
 
+    print("Results:")
     map_estimates = global_guide(data_train)
 
     print(map_estimates)
+    print("Data and results saved to data/")
+    print("\n")
 
     run_data.update(map_estimates)
 
