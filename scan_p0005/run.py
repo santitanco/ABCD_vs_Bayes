@@ -121,7 +121,7 @@ def init_loc_fn(site):
     raise ValueError(site["name"])
 
 
-for n in range(25):
+for n in range(20,25):
     labels = []  # 0: 4c,exp ; 1: 2b2c,exp ; 2: 4b,gauss
     data = []
 
