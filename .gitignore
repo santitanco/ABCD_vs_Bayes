@@ -1,1 +1,3 @@
 *.ipynb
+*/sample_10M.npy
+*/sample_10M_labels.npy
