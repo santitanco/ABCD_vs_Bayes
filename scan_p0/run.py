@@ -57,7 +57,7 @@ bkgDist = TruncatedExponential(lb=lb, ub=ub, rate=lambdab)
 
 
 Nevents = 20000
-S = 200
+S = 0
 
 p4b = S/Nevents   # S/N
 p2b2c = (Nevents-S)/(2*Nevents)
